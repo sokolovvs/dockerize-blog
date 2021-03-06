@@ -8,8 +8,6 @@ services:
       - ./services/nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - 8880:80
-    links:
-      - blog
     depends_on:
       - blog
   blog:
@@ -18,11 +16,11 @@ services:
       args:
         HOST_UID: ${HOST_UID}
         HOST_GID: ${HOST_GID}
+    environment:
+      PHP_IDE_CONFIG: "serverName=Docker"
     volumes:
       - ./src/blog:/var/www/blog
       - ./services/blog/php.ini:/usr/local/etc/php/php.ini
-    links:
-      - postgres
     depends_on:
       - postgres
   postgres:
