@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 
 services:
   nginx:
@@ -34,3 +34,19 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_DB: "${POSTGRES_DB}"
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.0
+    container_name: elastic-test-elasticsearch
+    restart: always
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+    volumes:
+      - ./esdata:/usr/share/elasticsearch/data
