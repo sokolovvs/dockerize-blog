@@ -10,6 +10,8 @@ services:
       - 8880:80
     depends_on:
       - blog
+    networks:
+      - localnet
   blog:
     build:
       context: ./services/blog
@@ -23,6 +25,8 @@ services:
       - ./services/blog/php.ini:/usr/local/etc/php/php.ini
     depends_on:
       - postgres
+    networks:
+      - localnet
   postgres:
     build: ./services/postgres
     ports:
@@ -34,6 +38,8 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_DB: "${POSTGRES_DB}"
+    networks:
+      - localnet
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.0.0
     container_name: elastic-test-elasticsearch
@@ -50,3 +56,15 @@ services:
       - "9200:9200"
     volumes:
       - ./esdata:/usr/share/elasticsearch/data
+    networks:
+      - localnet
+  rabbit:
+    build: ./services/rabbit
+    ports:
+      - 15672:15672
+    networks:
+      - localnet
+
+networks:
+  localnet:
+    driver: bridge
