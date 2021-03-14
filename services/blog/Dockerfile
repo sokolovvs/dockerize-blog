@@ -14,7 +14,11 @@ RUN apt-get install -y \
         libfreetype6-dev \
         libmcrypt-dev \
         libicu-dev \
+        watch \
+        ccze \
+        htop \
                 --no-install-recommends
+
 RUN docker-php-ext-install pdo_pgsql
 RUN docker-php-ext-install sockets
 
