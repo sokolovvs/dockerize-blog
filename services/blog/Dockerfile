@@ -16,6 +16,7 @@ RUN apt-get install -y \
         libicu-dev \
                 --no-install-recommends
 RUN docker-php-ext-install pdo_pgsql
+RUN docker-php-ext-install sockets
 
 RUN pecl install xdebug-3.0.3
 RUN docker-php-ext-enable xdebug
