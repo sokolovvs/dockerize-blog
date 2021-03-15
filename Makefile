@@ -1,5 +1,6 @@
 start:
 		docker-compose up --build --remove-orphans -d
+		docker ps -aq --filter="name=dockerizeblog_blog" | xargs -I'{}' docker exec -t '{}' bash -c "composer install --no-interaction --prefer-dist"
 		docker ps -aq --filter="name=dockerizeblog_blog" | xargs -I'{}' docker exec -t '{}' bash -c 'php artisan migrate --force --no-interaction -vvv'
 		docker ps -aq --filter="name=dockerizeblog_blog" | xargs -I'{}' docker exec -t '{}' bash -c 'npm run dev'
 stop:
