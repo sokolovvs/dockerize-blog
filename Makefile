@@ -11,3 +11,5 @@ show-logs:
 		docker ps -aq --filter="name=dockerizeblog_blog" | xargs -I'{}' docker exec -t '{}' bash -c 'watch -n 1 -c "tail -n 50 storage/logs/laravel.log | ccze -A"'
 db-seed: #Run seeder in blog container
 		docker ps -aq --filter="name=dockerizeblog_blog" | xargs -I'{}' docker exec -t '{}' bash -c 'php artisan db:seed --force -vvv'
+test:
+		docker ps -aq --filter="name=dockerizeblog_blog" | xargs -I'{}' docker exec -t '{}' bash -c 'vendor/bin/phpunit --configuration phpunit.xml'
