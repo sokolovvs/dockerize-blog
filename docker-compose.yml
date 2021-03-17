@@ -27,6 +27,24 @@ services:
       - postgres
     networks:
       - localnet
+  queue-worker:
+    build:
+      context: ./services/queue-worker
+      args:
+        HOST_UID: ${HOST_UID}
+        HOST_GID: ${HOST_GID}
+    restart: always
+    command: php artisan queue:work --tries=3
+    environment:
+      PHP_IDE_CONFIG: "serverName=Docker"
+    volumes:
+      - ./src/blog:/var/www/blog
+      - ./services/blog-queue/php.ini:/usr/local/etc/php/php.ini
+    depends_on:
+      - postgres
+      - rabbit
+    networks:
+      - localnet
   postgres:
     build: ./services/postgres
     ports:
@@ -53,7 +71,7 @@ services:
         soft: -1
         hard: -1
     ports:
-      - "9200:9200"
+      - "19200:9200"
     volumes:
       - ./esdata:/usr/share/elasticsearch/data
     networks:
