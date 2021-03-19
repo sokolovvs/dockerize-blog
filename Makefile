@@ -16,3 +16,5 @@ test:
 		docker ps -aq --filter="name=dockerizeblog_blog" | xargs -I'{}' docker exec -t '{}' bash -c 'vendor/bin/phpunit --configuration phpunit.xml'
 clear-cache:
 		docker ps -aq --filter="name=dockerizeblog_blog" | xargs -I'{}' docker exec -t '{}' bash -c 'php artisan optimize'
+clear-es:
+		curl -XDELETE localhost:19200/_all
