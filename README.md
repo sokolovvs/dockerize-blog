@@ -1,6 +1,6 @@
 ## Before starting the app, you have to:
 
-1.
+1. First start
 
 ```shell
 bash ./init.sh

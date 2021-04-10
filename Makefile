@@ -1,4 +1,5 @@
 start:
+		bash ./installation.sh
 		docker-compose up --build --remove-orphans -d #--scale queue-worker=2
 		docker ps -aq --filter="name=dockerizeblog_blog" | xargs -I'{}' docker exec -t '{}' bash -c "composer install --no-interaction --prefer-dist"
 		docker ps -aq --filter="name=dockerizeblog_blog" | xargs -I'{}' docker exec -t '{}' bash -c 'php artisan migrate --force --no-interaction -vvv'
