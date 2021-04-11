@@ -7,7 +7,7 @@ services:
       - ./src/blog:/var/www/blog
       - ./services/nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - 8880:80
+      - 80:80
     depends_on:
       - blog
     networks:
@@ -60,7 +60,6 @@ services:
       - localnet
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.0.0
-    container_name: elastic-test-elasticsearch
     restart: always
     environment:
       - bootstrap.memory_lock=true
@@ -80,6 +79,18 @@ services:
     build: ./services/rabbit
     ports:
       - 15672:15672
+    networks:
+      - localnet
+  portainer:
+    image: portainer/portainer
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    ports:
+      - 19000:9000
+      - 18000:8000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./volumes/portainer_data:/data
     networks:
       - localnet
 

@@ -12,10 +12,10 @@ bash ./init.sh
 
    [blog/.env](./src/blog/.env.example)
 
+###### You should check that params **HOST_UID** and **HOST_GID** equals the next values
 ```shell
-cp env.example .env
+id -u && id -g
 ```
-
 3.
 
 ```shell
@@ -32,3 +32,4 @@ ___
 
 ## The full commands list is [here](./Makefile)
 
+### You can use [portainer](http://localhost:19000) to manage containers and to read logs
